@@ -26,9 +26,7 @@ public class GeneralizationsD {
 
 			System.out.println(city + " was founded in " + majorCities.get(city));
 
-		}
-
-
+		
 
 	}
 }
