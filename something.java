@@ -6,7 +6,7 @@ import java.util.*;
 
 
 
-public class InputFileReader extends SalesTaxCalculator{
+public class InputFileReader {
 
 
     public static void InputFileReader( File f ) throws IOException{
@@ -91,5 +91,6 @@ public class InputFileReader extends SalesTaxCalculator{
             } catch (IOException e) {
                     e.printStackTrace();
                 }
+
             }
         }
