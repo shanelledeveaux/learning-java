@@ -16,6 +16,7 @@ public class InputFileReader extends SalesTaxCalculator{
         ArrayList<String> InputData = new ArrayList<String>();
         List<Double> SalesTax = new ArrayList<Double>();
         List<Double> ItemPrices = new ArrayList<Double>();
+        HashMap<String, Double> reciept = new HashMap <String, Double>();
 
         
         while ((line = br.readLine()) != null){
@@ -24,43 +25,57 @@ public class InputFileReader extends SalesTaxCalculator{
         
         for (String item: InputData){
             String[] ItemsArray=item.split(" at ");
-            double itemTotal = Double.parseDouble(ItemsArray[1]);
+            double itemWOTax = Double.parseDouble(ItemsArray[1]);
             double importTax = 0.05;
             double regularTax = 0.1;
             
-
-            if(ItemsArray[0].contains("imported")){
-                double importedItemTotal = itemTotal * importTax;
-                System.out.println()
-                // double addtlTax = itemTotal * importTax;
-                // SalesTax.add(addtlTax);
-                // System.out.println(addtlTax);
-            } else if (!ItemsArray[0].contains("book") && !ItemsArray[0].contains("chocolate") && !ItemsArray[0].contains("pill")) {
-                double addtlTax = itemTotal * regularTax;
+            //IF ITEM IS EXCLUDED
+            if(ItemsArray[0].contains("book") || ItemsArray[0].contains("chocolate") || ItemsArray[0].contains("pill")){
+                //AND THE ITEM IS IMPORTED
+                if(ItemsArray[0].contains("imported")){
+                    double addtlTax = itemWOTax * importTax;
+                    SalesTax.add(addtlTax);
+                    double itemTotal = itemWOTax + addtlTax;
+                    ItemPrices.add(itemTotal);             
+                    reciept.put(ItemsArray[0], itemTotal);    
+                //IF THE ITEM IS ONLY EXCLUDED
+                } else {
+                    ItemPrices.add(itemWOTax);
+                    reciept.put(ItemsArray[0], itemWOTax);  
+                }
+            // IF THE ITEM IS ONLY IMPORTED BUT NOT EXCLUDED
+            } else if (ItemsArray[0].contains("imported")) {
+                double addtlTax = itemWOTax * (importTax + regularTax);
+                    SalesTax.add(addtlTax);
+                    double itemTotal = itemWOTax + addtlTax;
+                    ItemPrices.add(itemTotal);
+                    reciept.put(ItemsArray[0], itemTotal);   
+                
+            //REGULAR ITEM
+            } else {
+                double addtlTax = itemWOTax * regularTax;
                 SalesTax.add(addtlTax);
-                // System.out.println("regular tax" + addtlTax);
-            }            
+                double itemTotal = addtlTax + itemWOTax;
+                ItemPrices.add(itemTotal);
+                reciept.put(ItemsArray[0], itemTotal); 
+            }           
             // System.out.println(Arrays.deepToString(ItemsArray));
 
-            ItemPrices.add(itemTotal);
+            // ItemPrices.add(itemTotal);
         }
+        System.out.println(Arrays.asList(reciept));
 
         double taxSum = 0;
         for (double value: SalesTax){
             taxSum+=value;
         }
-        System.out.println(taxSum);
 
         double itemSum = 0;
         for (double value: ItemPrices){
             itemSum+=value;
         }
 
-
-        System.out.println(Arrays.deepToString(SalesTax.toArray()));
-        // System.out.println(Arrays.deepToString(ItemPrices.toArray()));
-        // return ItemsArray;
-        // System.out.println(taxSum);
+        System.out.println(taxSum);
         System.out.println(itemSum);
         br.close();
         fr.close();
