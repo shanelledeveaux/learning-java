@@ -59,7 +59,7 @@ public class InputFileReader {
                 ItemPrices.add(itemTotal);
                 reciept.put(ItemsArray[0], itemTotal); 
             }           
-            // System.out.println(Arrays.deepToString(ItemsArray));
+            // System.out.println(Arrays.deepToString(ItemsArray.toArray()));
 
             // ItemPrices.add(itemTotal);
         }

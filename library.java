@@ -18,7 +18,7 @@ public class Library {
   }
   
   public static void main (String[] args){
-    HashMap<String, Boolean> myBooks = new HashMap <String, Boolean>();
+    // HashMap<String, Boolean> myBooks = new HashMap <String, Boolean>();
     myBooks.put("Road Down The Funnel", true);
     myBooks.put("Rat: A Biology", false);
     myBooks.put("TimeIn", true);
